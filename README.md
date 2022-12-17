@@ -3,6 +3,26 @@ Sample Python Project
 
 This is a sample Python project for quick bootstrapping new projects.
 
+## TODO:
+1. Create a `.env` file in the root folder with this content:
+```
+PYTHONPATH=.;${PYTHONPATH}
+```
+2. Update this README
+3. Update `setup.py`
+4. Do your awesome stuff
+
+## Setup
+
+1. If not already present, install Python 3.11 and [virtualeenvwrapper](https://pypi.org/project/virtualenvwrapper/)
+2. Create a local virtualenv
+```
+$ mkvirtualenv {your-env-name}
+```
+3. Install project dependencies using
+```bash
+$ pip install -r requirements.txt
+```
 
 ## Running Tests
 
