@@ -1,5 +1,6 @@
 import logging
-import utils.logging_config # isort:skip
+
+import utils.logging_config  # isort:skip
 
 logger = logging.getLogger(__name__)
 
