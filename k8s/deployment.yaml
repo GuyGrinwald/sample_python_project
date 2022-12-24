@@ -1,0 +1,49 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: sample-python-project-namespace
+  labels:
+    app: sample-python-project
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sample-python-project-deployment
+  namespace: sample-python-project-namespace
+  labels:
+    app: sample-python-project
+spec:
+  replicas: 1 # this should be changed for non local environments
+  selector:
+    matchLabels:
+      app: sample-python-project
+  template:
+    metadata:
+      labels:
+        app: sample-python-project
+    spec:
+      containers:
+        - name: sample-python-project
+          image: sample-python-project
+          imagePullPolicy: Never # this is so we'll use our local image version
+          ports:
+            - containerPort: 5000
+          # env: - no env variables for now
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sample-python-project-service
+  namespace: sample-python-project-namespace
+  labels:
+    app: sample-python-project
+spec:
+  ports:
+  - port: 5000
+    protocol: TCP
+    targetPort: 5000
+  selector:
+    app: sample-python-project
+  type: LoadBalancer

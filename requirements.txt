@@ -3,3 +3,6 @@ coverage
 black
 isort
 nox
+flask
+flask-restful
+gunicorn
