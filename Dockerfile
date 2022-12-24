@@ -16,7 +16,7 @@ RUN pip install -r requirements.txt
 # copy project
 COPY . /usr/sample-python-service/
 
-# annouced needed ports
+# annouce needed ports
 EXPOSE 5000
 
 # executes our gunicorn

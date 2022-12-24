@@ -59,17 +59,18 @@ $ docker run -d -p 127.0.0.1:5000:5000 sample-python-project
 ```
 
 ## Running in K8s
-1. Make sure you have K8s installed either via Docker-Desktop or other service such as minikube
-2. Install kubectl
-3. Apply the K8s deployment
+1. Make sure Docker is installed
+2. Make sure you have K8s installed either via Docker-Desktop or other service such as minikube
+3. Install kubectl
+4. Create the K8s deployment
 ```bash
 $ kubectl create -f k8s\deployment.yaml
 ```
-4. Run (and expose) the K8s deployment
+5. Run the K8s deployment
 ```bash
 $ kubectl run sample-python-project-deployment --image sample-python-project --namespace sample-python-project-namespace
 ```
-5. To kill the container run
+6. To kill the container and clean up resources run
 ```bash
-kubectl delete deployment sample-python-project-deployment 
+kubectl delete namespace sample-python-project-namespace
 ```
