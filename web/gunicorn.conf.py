@@ -1,7 +1,5 @@
 # This is the gunicron config file. For more information on the configs here see - https://docs.gunicorn.org/en/stable/settings.html
 
-chdir = "web"
-
 loglevel = "debug"
 
 worker_class = "gthread"

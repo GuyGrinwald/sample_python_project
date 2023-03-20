@@ -1,8 +1,8 @@
 from flask import Flask
 from flask_restful import Api
 
-from web.resources.health import Health
-from web.resources.hello_world import HelloWorld
+from resources.health import Health
+from resources.hello_world import HelloWorld
 
 app = Flask(__name__)
 api = Api(app)

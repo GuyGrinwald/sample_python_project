@@ -49,13 +49,13 @@ $ nox --session unit_test -f noxfile.py
 
 ## Running in Docker
 1. Make sure you have `Docker` installed
-2. `cd` to project root folder and build the image
+2. `cd` to project root folder and build the `web` image
 ```bash
-$ docker build . -t sample-python-project
+$ docker build -t sample-python-project-web -f web/Dockerfile .
 ```
 3. Run the image with exposed ports (make sure you're binded to the correct localhost - could also be `0.0.0.0`)
 ```bash
-$ docker run -d -p 127.0.0.1:5000:5000 sample-python-project
+$ docker run -d -p 127.0.0.1:5000:5000 sample-python-project-web
 ```
 
 ## Running in K8s
@@ -64,11 +64,11 @@ $ docker run -d -p 127.0.0.1:5000:5000 sample-python-project
 3. Install kubectl
 4. Create the K8s deployment
 ```bash
-$ kubectl create -f k8s\deployment.yaml
+$ kubectl create -f web/k8s/deployment.yaml
 ```
 5. Run the K8s deployment
 ```bash
-$ kubectl run sample-python-project-deployment --image sample-python-project --namespace sample-python-project-namespace
+$ kubectl run sample-python-project-web-deployment --image sample-python-project-web --namespace sample-python-project-web-namespace
 ```
 6. To kill the container and clean up resources run
 ```bash
