@@ -72,6 +72,16 @@ spec:
         tier: backend
     spec:
       containers:
+      - name: connector
+        image: sample-python-project-db
+        imagePullPolicy: Never # this is so we'll use our local image version
+        resources:
+          requests:
+            cpu: 1
+            memory: "128M"
+          limits:
+            cpu: 1
+            memory: "128M"
       - name: db
         image: postgres:15
         env:
@@ -99,16 +109,16 @@ spec:
 
 ---
 
-kind: Service
 apiVersion: v1
+kind: Service
 metadata:
   name: db-service
   namespace: sample-python-project-web-namespace
 spec:
-  ports:
-  - port: 5432
-    protocol: TCP
-    targetPort: 5432
+  type: NodePort
   selector:
     app: postgres
-  type: LoadBalancer
+  ports:
+  - port: 5432
+    targetPort: 5432
+    protocol: TCP

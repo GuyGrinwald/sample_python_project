@@ -8,3 +8,4 @@ flask-restful
 gunicorn
 django
 django-extensions
+psycopg2-binary
