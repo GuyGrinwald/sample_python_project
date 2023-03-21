@@ -6,3 +6,5 @@ nox
 flask
 flask-restful
 gunicorn
+django
+django-extensions

@@ -1,0 +1,114 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: sample-python-project-web-namespace
+
+---
+
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: db-pv
+  namespace: sample-python-project-web-namespace
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /data/db-pv
+
+---
+
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: db-pvc
+  namespace: sample-python-project-web-namespace
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  volumeName: db-pv
+
+---
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: db-credentials
+  namespace: sample-python-project-web-namespace
+type: Opaque
+stringData:
+  user: db_user
+  password: db_password
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-deployment
+  namespace: sample-python-project-web-namespace
+  labels:
+    app: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+        tier: backend
+    spec:
+      containers:
+      - name: db
+        image: postgres:15
+        env:
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: db-credentials
+              key: user
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-credentials
+              key: password
+        - name: POSTGRES_DB
+          value: sample-python-project
+        ports:
+        - containerPort: 5432
+        volumeMounts:
+        - name: db-volume-mount
+          mountPath: /var/lib/postgresql/data
+      volumes:
+      - name: db-volume-mount
+        persistentVolumeClaim:
+          claimName: db-pvc
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: db-service
+  namespace: sample-python-project-web-namespace
+spec:
+  ports:
+  - port: 5432
+    protocol: TCP
+    targetPort: 5432
+  selector:
+    app: postgres
+  type: LoadBalancer

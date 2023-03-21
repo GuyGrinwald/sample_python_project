@@ -16,7 +16,13 @@ PYTHONPATH=.;${PYTHONPATH}
     * Do you need a web service - update `web/`
     * Do you need a Docker - update `Dockerfile`
     * Do you need `K8s` - update `k8s/`
-6. Update `k8s/deployment.yaml` with your correct project name (i.e. replace `sample-python-project` prefix)
+6. Update `web/k8s/deployment.yaml` with your correct project name (i.e. replace `sample-python-project` prefix)
+7. Build your Django App
+    * `$ django-admin startproject sampleprojectdb`
+    * `$ cd sampleprojectdb\`
+    * `$ python manage.py startapp hr`
+    * Delete redundant files
+
 
 ## Setup
 
